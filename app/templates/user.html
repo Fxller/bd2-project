@@ -1,0 +1,33 @@
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Titolo</th>
+      <th>Punteggio dato</th>
+      <th>Status</th>
+      <th>Azioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for entry in watchlist %}
+    <tr>
+      <td>{{ entry.anime_info.title }}</td>
+      <td>{{ entry.score }}</td>
+      <td>{{ entry.status }}</td>
+      <td>
+        <a
+          href="{{ url_for('main.edit_watchlist', entry_id=entry._id) }}"
+          class="btn btn-sm btn-warning"
+          >Modifica</a
+        >
+        <form
+          method="POST"
+          action="{{ url_for('main.delete_watchlist', entry_id=entry._id) }}"
+          style="display: inline"
+        >
+          <button type="submit" class="btn btn-sm btn-danger">Elimina</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
