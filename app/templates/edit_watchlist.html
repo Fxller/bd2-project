@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Modifica voce nella Watchlist</h2>
+<form method="POST">
+    <p><strong>Anime:</strong> {{ anime.title }}</p>
+    <div class="mb-3">
+        <label for="score" class="form-label">Punteggio</label>
+        <input type="number" class="form-control" id="score" name="score" value="{{ entry.score }}" min="1" max="10" required>
+    </div>
+    <div class="mb-3">
+        <label for="status" class="form-label">Stato</label>
+        <select class="form-select" id="status" name="status">
+            <option value="Watching" {% if entry.status == 'Watching' %}selected{% endif %}>Watching</option>
+            <option value="Completed" {% if entry.status == 'Completed' %}selected{% endif %}>Completed</option>
+            <option value="Plan to Watch" {% if entry.status == 'Plan to Watch' %}selected{% endif %}>Plan to Watch</option>
+            <option value="Dropped" {% if entry.status == 'Dropped' %}selected{% endif %}>Dropped</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Salva modifiche</button>
+</form>
+{% endblock %}
