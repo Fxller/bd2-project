@@ -1,3 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="mb-4">Ciao {{ username }}! 👋</h2>
+<p><strong>Totale anime nella watchlist:</strong> {{ watchlist|length }}</p>
+
+<hr>
+
+
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -10,7 +18,12 @@
   <tbody>
     {% for entry in watchlist %}
     <tr>
-      <td>{{ entry.anime_info.title }}</td>
+      <td>
+        <a
+          href="{{ url_for('main.anime_detail', anime_id=entry.anime_info.anime_id) }}"
+          >{{ entry.anime_info.title }}</a
+        >
+      </td>
       <td>{{ entry.score }}</td>
       <td>{{ entry.status }}</td>
       <td>
@@ -31,3 +44,4 @@
     {% endfor %}
   </tbody>
 </table>
+{% endblock %}

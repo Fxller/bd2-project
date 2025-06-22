@@ -1,6 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from bson.objectid import ObjectId
 from .db import get_db
+from flask import session
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 main = Blueprint('main', __name__)
 
@@ -29,12 +33,15 @@ def home():
     anime_list = db.anime.find(query).skip(skip).limit(per_page)
     total_anime = db.anime.count_documents(query)
     total_pages = (total_anime + per_page - 1) // per_page
-
-    return render_template('home.html', anime=anime_list, total_pages=total_pages, current_page=page)
+    generi = db.anime.distinct("genre")
+    
+    return render_template('home.html', anime=anime_list, total_pages=total_pages, current_page=page, generi = generi)
 
 @main.route('/watchlist/add', methods=['GET', 'POST'])
 def add_to_watchlist():
     db = get_db()
+
+    preselected_id = request.args.get('preselected_id', type=int)
 
     if request.method == 'POST':
         entry = {
@@ -48,7 +55,7 @@ def add_to_watchlist():
         return redirect(url_for('main.user_profile', username=entry['username']))
 
     anime_list = db.anime.find({}, {"anime_id": 1, "title": 1}).limit(100)
-    return render_template("add_watchlist.html", anime_list=anime_list)
+    return render_template("add_watchlist.html", anime_list=anime_list, preselected_id=preselected_id)
 
 @main.route('/watchlist/edit/<entry_id>', methods=['GET', 'POST'])
 def edit_watchlist(entry_id):
@@ -117,3 +124,74 @@ def dashboard():
         total_watchlist=total_watchlist,
         top_anime=top_anime
     )
+
+@main.route('/anime/<int:anime_id>')
+def anime_detail(anime_id):
+    db = get_db()
+    anime = db.anime.find_one({"anime_id": anime_id})
+    if not anime:
+        return "Anime non trovato", 404
+    return render_template("anime_detail.html", anime=anime)
+
+@main.route('/register', methods=['GET', 'POST'])
+def register():
+    db = get_db()
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+
+        # verifica se l'utente esiste già
+        if db.users.find_one({"username": username}):
+            flash("Username già esistente", "danger")
+            return redirect(url_for('main.register'))
+
+        hashed_pw = bcrypt.generate_password_hash(password).decode('utf-8')
+        db.users.insert_one({"username": username, "password": hashed_pw})
+        flash("Registrazione completata. Ora puoi effettuare il login!", "success")
+        return redirect(url_for('main.login'))
+
+    return render_template('register.html')
+
+
+@main.route('/login', methods=['GET', 'POST'])
+def login():
+    db = get_db()
+
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        user = db.users.find_one({"username": username})
+        print("Utente nel DB:", user)
+
+        if user and bcrypt.check_password_hash(user['password'], password):
+            session['username'] = username
+            flash("Login effettuato!", "success")
+            return redirect(url_for('main.user_profile', username=username))
+        else:
+            flash("Credenziali non valide", "danger")
+
+    return render_template('login.html')
+
+@main.route('/logout')
+def logout():
+    session.pop('username', None)
+    flash("Logout effettuato.", "info")
+    return redirect(url_for('main.login'))
+
+@main.route('/user/<username>')
+def user_profile(username):
+    db = get_db()
+    user = db.users.find_one({"username": username})
+    if not user:
+        return "Utente non trovato", 404
+
+    watchlist = db.user_anime_list.find({"username": username})
+    enriched_watchlist = []
+    for entry in watchlist:
+        anime = db.anime.find_one({"anime_id": entry["anime_id"]})
+        if anime:
+            entry["anime_info"] = anime
+            enriched_watchlist.append(entry)
+
+    return render_template("user.html", username=username, watchlist=enriched_watchlist)
