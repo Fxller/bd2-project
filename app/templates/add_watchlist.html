@@ -9,11 +9,13 @@
     </div>
     <div class="mb-3">
         <label for="anime_id" class="form-label">Anime</label>
-        <select class="form-select" id="anime_id" name="anime_id">
-            {% for anime in anime_list %}
-            <option value="{{ anime.anime_id }}">{{ anime.title }}</option>
-            {% endfor %}
-        </select>
+    <select class="form-select" id="anime_id" name="anime_id">
+    {% for anime in anime_list %}
+    <option value="{{ anime.anime_id }}" {% if anime.anime_id == preselected_id %}selected{% endif %}>
+        {{ anime.title }}
+    </option>
+    {% endfor %}
+    </select>
     </div>
     <div class="mb-3">
         <label for="score" class="form-label">Punteggio</label>

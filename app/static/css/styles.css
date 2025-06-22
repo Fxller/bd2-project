@@ -1,0 +1,191 @@
+/* Tema scuro + accenti viola */
+body {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+}
+
+a {
+    color: #bb86fc;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #d4bfff;
+    text-decoration: underline;
+}
+
+.navbar {
+    background-color: #1f1f2e;
+    border-bottom: 2px solid #bb86fc;
+}
+
+.nav-link {
+    margin: 0 12px;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #bb86fc !important;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+}
+
+.navbar-brand:hover {
+    text-decoration: none;
+}
+
+.btn:hover {
+    text-decoration: none;
+}
+
+.btn-outline-light:hover {
+    background-color: #bb86fc;
+    color: #000;
+    border-color: #bb86fc;
+}
+
+.card {
+    background-color: #1f1f1f;
+    border: 1px solid #2a2a2a;
+    color: #fff;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 15px #bb86fc88;
+}
+
+.card-title {
+    color: #bb86fc;
+}
+
+.alert {
+    border: none;
+    border-left: 5px solid #bb86fc;
+    background-color: #222;
+    color: #ddd;
+}
+
+.btn-primary {
+    background-color: #bb86fc;
+    border-color: #bb86fc;
+    color: #000;
+}
+
+.btn-primary:hover {
+    background-color: #a36bf9;
+    border-color: #a36bf9;
+}
+
+.table {
+    background-color: #1c1c1c;
+    color: #eee;
+}
+
+.table thead {
+    background-color: #2a2a2a;
+    color: #bb86fc;
+}
+
+.btn-logout {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid #bb86fc;
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #bb86fc;
+    color: #000;
+    border-color: #bb86fc;
+}
+
+.list-group-item {
+    border-color: #2a2a2a;
+}
+
+.list-group-item strong {
+    color: #bb86fc;
+}
+
+.custom-input {
+    background-color: #1f1f1f;
+    color: #fff;
+    border: 1px solid #2a2a2a;
+    transition: border-color 0.3s ease;
+}
+
+.custom-input:focus {
+    border-color: #bb86fc;
+    box-shadow: 0 0 5px #bb86fc66;
+    background-color: #1f1f1f;
+    color: #fff;
+}
+
+.custom-input::placeholder {
+    color: #888;
+}
+
+.catalogo-anime {
+    display: inline-block;
+    padding-bottom: 5px;
+    font-family: 'Segoe UI', 'Roboto', 'Verdana', sans-serif;
+    font-weight: bold;
+    color: #fff;
+}
+
+.login-box {
+    background-color: #1c1c1c;
+    border: 1px solid #2a2a2a;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 0 20px #bb86fc55;
+}
+
+.login-box h2 {
+    color: #fff;
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.custom-input {
+    background-color: #1f1f1f;
+    color: #fff;
+    border: 1px solid #2a2a2a;
+}
+
+.custom-input::placeholder {
+    color: #888;
+}
+
+.custom-input:focus {
+    border-color: #bb86fc;
+    box-shadow: 0 0 5px #bb86fc66;
+    background-color: #1f1f1f;
+    color: #fff;
+}
+
+.btn-form {
+    background-color: #7e5fbf;
+    border: 1px solid #7e5fbf;
+    color: #fff;
+    font-weight: 500;
+    padding: 8px 16px;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    border-radius: 4px;
+}
+
+.btn-form:hover {
+    background-color: #6b4fa3;
+    border-color: #6b4fa3;
+    color: #fff;
+    box-shadow: 0 0 8px #7e5fbf55;
+}

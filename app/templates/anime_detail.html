@@ -1,0 +1,66 @@
+{% extends 'base.html' %} {% block content %}
+
+<h2 class="mb-4 text-center">{{ anime.title }}</h2>
+
+<div class="row">
+  <div class="col-md-4 text-center mb-3">
+    {% if anime.image_url %}
+    <img
+      src="{{ anime.image_url }}"
+      alt="{{ anime.title }}"
+      class="img-fluid rounded shadow"
+      style="max-height: 350px"
+    />
+    {% else %}
+    <div class="text-light bg-secondary p-5 rounded">
+      Nessuna immagine disponibile
+    </div>
+    {% endif %}
+    <a
+      href="{{ url_for('main.add_to_watchlist') }}?preselected_id={{ anime.anime_id }}"
+      class="btn btn-primary mt-3 w-100"
+    >
+      <i class="bi bi-plus-circle me-2"></i> Aggiungi alla Watchlist
+    </a>
+  </div>
+
+  <div class="col-md-8">
+    <ul class="list-group list-group-flush bg-transparent">
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Tipo:</strong> {{ anime.type }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Genere:</strong> {{ anime.genre }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Punteggio:</strong> {{ anime.score }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Rating:</strong> {{ anime.rating }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Episodi:</strong> {{ anime.episodes }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Durata:</strong> {{ anime.duration }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Studio:</strong> {{ anime.studio }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Fonte:</strong> {{ anime.source }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Data di uscita:</strong> {{ anime.aired_string }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Favoriti:</strong> {{ anime.favorites }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Produttori:</strong> {{ anime.producer }}
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}
