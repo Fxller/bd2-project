@@ -195,3 +195,46 @@ def user_profile(username):
             enriched_watchlist.append(entry)
 
     return render_template("user.html", username=username, watchlist=enriched_watchlist)
+
+@main.route('/account')
+def account():
+    if 'username' not in session:
+        flash("Devi essere loggato!", "danger")
+        return redirect(url_for('main.login'))
+
+    db = get_db()
+    user = db.users.find_one({"username": session['username']})
+    if not user:
+        flash("Utente non trovato!", "danger")
+        return redirect(url_for('main.login'))
+
+    return render_template('account.html', user=user)
+
+@main.route('/account/edit', methods=['GET', 'POST'])
+def edit_account():
+    if 'username' not in session:
+        flash("Devi essere loggato!", "danger")
+        return redirect(url_for('main.login'))
+
+    db = get_db()
+    user = db.users.find_one({"username": session['username']})
+
+    if request.method == 'POST':
+        email = request.form['email']
+        gender = request.form['gender']
+        location = request.form['location']
+        birth_date = request.form['birth_date']
+
+        db.users.update_one(
+            {"username": session['username']},
+            {"$set": {
+                "email": email,
+                "gender": gender,
+                "location": location,
+                "birth_date": birth_date
+            }}
+        )
+        flash("Dati aggiornati con successo!", "success")
+        return redirect(url_for('main.account'))
+
+    return render_template('edit_account.html', user=user)
