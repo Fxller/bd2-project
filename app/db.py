@@ -7,7 +7,7 @@ db = None
 def init_db():
     global client, db
     client = MongoClient("mongodb://localhost:27017/")
-    db = client["anime_db"]  # nome del database MongoDB
+    db = client["anime_db"] 
 
 def get_db():
     return db

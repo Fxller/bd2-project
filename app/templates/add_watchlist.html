@@ -8,10 +8,10 @@
         <input type="text" class="form-control" id="username" name="username" required>
     </div>
     <div class="mb-3">
-        <label for="anime_id" class="form-label">Anime</label>
-    <select class="form-select" id="anime_id" name="anime_id">
+        <label for="_id" class="form-label">Anime</label>
+    <select class="form-select" id="_id" name="_id">
     {% for anime in anime_list %}
-    <option value="{{ anime.anime_id }}" {% if anime.anime_id == preselected_id %}selected{% endif %}>
+    <option value="{{ anime._id }}" {% if anime._id == preselected_id %}selected{% endif %}>
         {{ anime.title }}
     </option>
     {% endfor %}
