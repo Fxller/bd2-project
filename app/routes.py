@@ -46,7 +46,7 @@ def add_to_watchlist():
     if request.method == 'POST':
         entry = {
             "username": request.form['username'],
-            "anime_id": int(request.form['anime_id']),
+            "_id": int(request.form['_id']),
             "score": int(request.form['score']),
             "status": request.form['status']
         }
@@ -54,7 +54,7 @@ def add_to_watchlist():
         flash("Anime aggiunto con successo alla watchlist!", "success")
         return redirect(url_for('main.user_profile', username=entry['username']))
 
-    anime_list = db.anime.find({}, {"anime_id": 1, "title": 1}).limit(100)
+    anime_list = db.anime.find({}, {"_id": 1, "title": 1}).limit(100)
     return render_template("add_watchlist.html", anime_list=anime_list, preselected_id=preselected_id)
 
 @main.route('/watchlist/edit/<entry_id>', methods=['GET', 'POST'])
@@ -73,7 +73,7 @@ def edit_watchlist(entry_id):
         flash("Voce modificata con successo!", "info")
         return redirect(url_for('main.user_profile', username=entry['username']))
 
-    anime = db.anime.find_one({"anime_id": entry['anime_id']})
+    anime = db.anime.find_one({"_id": entry['_id']})
     return render_template("edit_watchlist.html", entry=entry, anime=anime)
 
 @main.route('/watchlist/delete/<entry_id>', methods=['POST'])
@@ -106,13 +106,13 @@ def dashboard():
 
     # Top 5 anime più popolari nella watchlist
     top_anime = db.user_anime_list.aggregate([
-        {"$group": {"_id": "$anime_id", "count": {"$sum": 1}}},
+        {"$group": {"_id": "$_id", "count": {"$sum": 1}}},
         {"$sort": {"count": -1}},
         {"$limit": 5},
         {"$lookup": {
             "from": "anime",
             "localField": "_id",
-            "foreignField": "anime_id",
+            "foreignField": "_id",
             "as": "anime_info"
         }},
         {"$unwind": "$anime_info"}
@@ -125,10 +125,10 @@ def dashboard():
         top_anime=top_anime
     )
 
-@main.route('/anime/<int:anime_id>')
-def anime_detail(anime_id):
+@main.route('/anime/<int:_id>')
+def anime_detail(_id):
     db = get_db()
-    anime = db.anime.find_one({"anime_id": anime_id})
+    anime = db.anime.find_one({"_id": _id})
     if not anime:
         return "Anime non trovato", 404
     return render_template("anime_detail.html", anime=anime)
@@ -189,7 +189,7 @@ def user_profile(username):
     watchlist = db.user_anime_list.find({"username": username})
     enriched_watchlist = []
     for entry in watchlist:
-        anime = db.anime.find_one({"anime_id": entry["anime_id"]})
+        anime = db.anime.find_one({"_id": entry["_id"]})
         if anime:
             entry["anime_info"] = anime
             enriched_watchlist.append(entry)
