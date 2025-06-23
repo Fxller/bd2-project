@@ -19,17 +19,23 @@
           placeholder="Inserisci il tuo username"
         />
       </div>
-      <div class="mb-3">
+      <div class="mb-3 position-relative">
         <label for="password" class="form-label">Password</label>
         <input
           type="password"
           name="password"
           id="password"
-          class="form-control custom-input"
-          required
-          minlength="6"
+          class="form-control custom-input psw-input"
           placeholder="Inserisci la password"
+          required
         />
+        <button
+          type="button"
+          class="btn btn-sm position-absolute toggle-psw-btn"
+          id="toggle-password"
+        >
+          <i class="bi bi-eye-slash"></i>
+        </button>
       </div>
       <button type="submit" class="btn btn-form">Accedi</button>
     </form>
@@ -44,5 +50,22 @@
     </p>
   </div>
 </div>
+
+<script>
+  const btn = document.getElementById("toggle-password");
+  const field = document.getElementById("password");
+  let shown = false;
+
+  btn.addEventListener("click", () => {
+    if (shown) {
+      field.type = "password";
+      btn.innerHTML = '<i class="bi bi-eye-slash"></i>';
+    } else {
+      field.type = "text";
+      btn.innerHTML = '<i class="bi bi-eye"></i>';
+    }
+    shown = !shown;
+  });
+</script>
 
 {% endblock %}

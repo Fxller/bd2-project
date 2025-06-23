@@ -42,11 +42,18 @@
         <div class="d-flex align-items-center">
           {% if 'username' in session %}
           <a
-            href="{{ url_for('main.user_profile', username=session['username']) }}"
+            href="{{ url_for('main.account') }}"
             class="btn btn-sm btn-outline-light me-2"
             title="Profilo"
           >
             <i class="bi bi-person-circle"></i>
+          </a>
+          <a
+            href="{{ url_for('main.user_profile', username=session['username']) }}"
+            class="btn btn-sm btn-outline-light me-2"
+            title="Watchlist"
+          >
+            <i class="bi bi-list-stars"></i>
           </a>
           <a href="{{ url_for('main.logout') }}" class="btn btn-sm btn-logout"
             >Logout</a

@@ -189,3 +189,26 @@ a:hover {
     color: #fff;
     box-shadow: 0 0 8px #7e5fbf55;
 }
+
+img.rounded-circle {
+    border: 2px solid #bb86fc;
+    padding: 4px;
+}
+
+.psw-input {
+    padding-right: 40px;
+}
+
+.toggle-psw-btn {
+    background-color: transparent;
+    border: none;
+    color: #bbb;
+    padding: 4px;
+    top: 72%;
+    right: 10px;
+    transform: translateY(-50%);
+}
+
+.toggle-psw-btn:hover {
+    color: #fff;
+}
