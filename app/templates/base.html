@@ -37,35 +37,35 @@
         <span class="navbar-brand text-light fw-bold" style="cursor: default">
           <span style="color: #bb86fc">ANI</span>MEDA
         </span>
-        {% endif %} {% if request.endpoint not in ['main.login',
-        'main.register'] %}
+        {% endif %} {% if request.endpoint not in ['users.login',
+        'users.register'] %}
         <div class="d-flex align-items-center">
           {% if 'username' in session %}
           <a
-            href="{{ url_for('main.account') }}"
+            href="{{ url_for('users.account') }}"
             class="btn btn-sm btn-outline-light me-2"
             title="Profilo"
           >
             <i class="bi bi-person-circle"></i>
           </a>
           <a
-            href="{{ url_for('main.user_profile', username=session['username']) }}"
+            href="{{ url_for('users.user_profile', username=session['username']) }}"
             class="btn btn-sm btn-outline-light me-2"
             title="Watchlist"
           >
             <i class="bi bi-list-stars"></i>
           </a>
-          <a href="{{ url_for('main.logout') }}" class="btn btn-sm btn-logout"
+          <a href="{{ url_for('users.logout') }}" class="btn btn-sm btn-logout"
             >Logout</a
           >
           {% else %}
           <a
-            href="{{ url_for('main.login') }}"
+            href="{{ url_for('users.login') }}"
             class="btn btn-outline-light btn-sm me-2"
             >Login</a
           >
           <a
-            href="{{ url_for('main.register') }}"
+            href="{{ url_for('users.register') }}"
             class="btn btn-outline-light btn-sm"
             >Registrati</a
           >

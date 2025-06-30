@@ -40,11 +40,11 @@
     </ul>
 
     <div class="d-flex gap-2">
-      <a href="{{ url_for('main.edit_account') }}" class="btn btn-form w-50"
+      <a href="{{ url_for('users.edit_account') }}" class="btn btn-form w-50"
         >Modifica dati</a
       >
       <a
-        href="{{ url_for('main.user_profile', username=session['username']) }}"
+        href="{{ url_for('users.user_profile', username=session['username']) }}"
         class="btn btn-form w-50"
         >Vai alla Watchlist</a
       >

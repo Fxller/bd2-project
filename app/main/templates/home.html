@@ -35,9 +35,6 @@
   <div class="col-md-2">
     <button type="submit" class="btn btn-primary w-100">Filtra</button>
   </div>
-  <div class="col-md-2">
-    <a href="{{ url_for('main.home') }}" class="btn btn-secondary w-100">Rimuovi Filtri</a>
-  </div>
 </form>
 
 <!-- LISTA ANIME A CARD -->
@@ -50,7 +47,7 @@
         <p><strong>Tipo:</strong> {{ a.type }}</p>
         <p><strong>Punteggio:</strong> {{ a.score }}</p>
         <p><strong>Genere:</strong> {{ a.genre }}</p>
-        <a href="{{ url_for('main.anime_detail', _id=a._id) }}" class="btn btn-primary mt-2 w-100">Dettagli</a>
+        <a href="{{ url_for('anime.anime_detail', anime_id=a._id) }}" class="btn btn-primary mt-2 w-100">Dettagli</a>
       </div>
     </div>
   </div>
@@ -96,7 +93,5 @@
   </ul>
 </nav>
 {% endif %}
-
-
 
 {% endblock %}

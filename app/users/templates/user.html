@@ -20,7 +20,7 @@
     <tr>
       <td>
         <a
-          href="{{ url_for('main.anime_detail', _id=entry.anime_info._id) }}"
+          href="{{ url_for('anime.anime_detail', anime_id=entry.anime_info.anime_id) }}"
           >{{ entry.anime_info.title }}</a
         >
       </td>
@@ -28,13 +28,13 @@
       <td>{{ entry.status }}</td>
       <td>
         <a
-          href="{{ url_for('main.edit_watchlist', entry_id=entry._id) }}"
+          href="{{ url_for('anime.edit_watchlist', entry_id=entry._id) }}"
           class="btn btn-sm btn-warning"
           >Modifica</a
         >
         <form
           method="POST"
-          action="{{ url_for('main.delete_watchlist', entry_id=entry._id) }}"
+          action="{{ url_for('anime.delete_watchlist', entry_id=entry._id) }}"
           style="display: inline"
         >
           <button type="submit" class="btn btn-sm btn-danger">Elimina</button>
