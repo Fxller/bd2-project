@@ -2,7 +2,7 @@
 
 <div class="text-center mb-4">
   <h1 class="catalogo-anime">
-    <span style="font-size: 1.5rem;"></span> Profilo Utente
+    <span style="font-size: 1.5rem"></span> Profilo Utente
   </h1>
 </div>
 
@@ -35,7 +35,7 @@
         <strong>Location:</strong> {{ user.location }}
       </li>
       <li class="list-group-item bg-transparent text-light">
-        <strong>Data di nascita:</strong> {{ user.birth_date }}
+        <strong>Data di nascita:</strong> {{ user.birth_date[:10] }}
       </li>
     </ul>
 

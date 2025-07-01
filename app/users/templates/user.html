@@ -1,47 +1,53 @@
-{% extends 'base.html' %}
-{% block content %}
-<h2 class="mb-4">Ciao {{ username }}! 👋</h2>
-<p><strong>Totale anime nella watchlist:</strong> {{ watchlist|length }}</p>
+{% extends 'base.html' %} {% block content %}
 
-<hr>
+<h2 class="mb-4 text-center">La tua Watchlist, {{ username }} 🎬</h2>
+<p class="text-center mb-4">
+  <strong>Totale anime nella watchlist:</strong> {{ watchlist|length }}
+</p>
 
+<div class="watchlist-list">
+  {% for entry in watchlist %}
+  <div class="watchlist-item d-flex align-items-center">
+    <div class="watchlist-img">
+      <img
+        src="{{ url_for('static', filename='default_anime.jpg') }}"
+        alt="Cover"
+      />
+    </div>
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Titolo</th>
-      <th>Punteggio dato</th>
-      <th>Status</th>
-      <th>Azioni</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for entry in watchlist %}
-    <tr>
-      <td>
+    <div class="watchlist-details flex-grow-1">
+      <h5 class="mb-2">{{ entry.anime_info.title }}</h5>
+      <p class="mb-1">
+        <strong>Punteggio:</strong> {{ entry.score }} |
+        <strong>Status:</strong> {{ entry.status }} |
+        <strong>Episodi visti:</strong> {{ entry.my_watched_episodes }}
+      </p>
+
+      <div class="btn-group mt-2" role="group">
         <a
           href="{{ url_for('anime.anime_detail', anime_id=entry.anime_info.anime_id) }}"
-          >{{ entry.anime_info.title }}</a
+          class="btn btn-sm btn-custom btn-dettagli"
+          >Dettagli</a
         >
-      </td>
-      <td>{{ entry.score }}</td>
-      <td>{{ entry.status }}</td>
-      <td>
         <a
           href="{{ url_for('anime.edit_watchlist', entry_id=entry._id) }}"
-          class="btn btn-sm btn-warning"
+          class="btn btn-sm btn-custom btn-modifica"
           >Modifica</a
         >
         <form
           method="POST"
           action="{{ url_for('anime.delete_watchlist', entry_id=entry._id) }}"
-          style="display: inline"
+          class="d-inline"
         >
-          <button type="submit" class="btn btn-sm btn-danger">Elimina</button>
+          <button type="submit" class="btn btn-sm btn-custom btn-elimina">
+            Elimina
+          </button>
         </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+
 {% endblock %}

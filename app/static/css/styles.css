@@ -238,3 +238,84 @@ img.rounded-circle {
     border: 1px solid #2a2a2a !important;
     pointer-events: none;
 }
+
+.watchlist-item {
+    background-color: #1f1f1f;
+    border: 1px solid #2a2a2a;
+    color: #fff;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.watchlist-img img {
+    width: 80px;
+    height: 110px;
+    object-fit: cover;
+    border: 1px solid #333;
+    border-radius: 4px;
+}
+
+.watchlist-details {
+    flex-grow: 1;
+    text-align: right;
+    margin-left: 20px;
+}
+
+.watchlist-item:hover {
+    background-color: #262626;
+}
+
+.btn-custom,
+.btn-custom:focus,
+.btn-custom:active {
+    padding: 6px 14px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 4px transparent;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-dettagli {
+    background-color: #bb86fc;
+}
+
+.btn-dettagli:hover {
+    background-color: #a46bdf;
+    box-shadow: 0 0 8px #bb86fc66;
+}
+
+.btn-modifica {
+    background-color: #7e5fbf;
+}
+
+.btn-modifica:hover {
+    background-color: #6b4fa3;
+    box-shadow: 0 0 8px #7e5fbf66;
+}
+
+.btn-elimina {
+    background-color: #dc3545;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.btn-elimina:hover {
+    background-color: #c82333;
+    box-shadow: 0 0 8px #dc354566;
+}
+
+.btn-group .btn-custom {
+    margin-right: 5px;
+}
