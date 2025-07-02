@@ -24,12 +24,10 @@ def add_to_watchlist():
     if not anime_id:
         return jsonify({"error": "Anime ID mancante"}), 400
 
-    # Recupera l'utente completo per ottenere l'_id
     user = mongo.db.users.find_one({"username": session['username']})
     if not user:
         return jsonify({"error": "Utente non trovato"}), 404
 
-# Controllo se è già presente nella watchlist
     esiste = mongo.db.user_anime_list.find_one({
         "user_id": user["_id"],
         "anime_id": ObjectId(anime_id)
@@ -50,7 +48,6 @@ def add_to_watchlist():
 
     mongo.db.user_anime_list.insert_one(entry)
     return jsonify({"message": "Anime aggiunto con successo alla watchlist!"}), 200
-
 
 
 @anime_bp.route('/watchlist/edit/<entry_id>', methods=['GET', 'POST'])
@@ -79,3 +76,24 @@ def delete_watchlist(entry_id):
         flash("Voce eliminata dalla watchlist.", "danger")
         return redirect(url_for('users.user_profile', username=entry['username']))
     return "Voce non trovata", 404
+
+@anime_bp.route('/watchlist/update_full', methods=['POST'])
+def update_watchlist_full():
+    data = request.get_json()
+
+    entry_id = data['entry_id']
+    my_score = data['my_score']
+    stato = data['stato']
+    my_watched_episodes = data['my_watched_episodes']
+
+    mongo.db.user_anime_list.update_one(
+        { "_id": ObjectId(entry_id) },
+        { "$set": {
+            "my_score": my_score,
+            "stato": stato,
+            "my_watched_episodes": my_watched_episodes
+        }}
+    )
+
+    return jsonify({ "success": True })
+

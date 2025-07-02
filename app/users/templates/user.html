@@ -1,4 +1,6 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %}
+
+{% block content %}
 
 <h2 class="mb-4 text-center">La tua Watchlist, {{ username }} 🎬</h2>
 <p class="text-center mb-4">
@@ -8,45 +10,56 @@
 <div class="watchlist-list">
   {% for entry in watchlist %}
   <div class="watchlist-item d-flex align-items-center">
+    
     <div class="watchlist-img">
-      <img
-        src="{{ url_for('static', filename='default_anime.jpg') }}"
-        alt="Cover"
-      />
+      <img src="{{ url_for('static', filename='default_anime.jpg') }}" alt="Cover" />
     </div>
 
     <div class="watchlist-details flex-grow-1">
       <h5 class="mb-2">{{ entry.anime_info.title }}</h5>
+      
       <p class="mb-1">
-        <strong>Punteggio:</strong> {{ entry.score }} |
-        <strong>Status:</strong> {{ entry.status }} |
-        <strong>Episodi visti:</strong> {{ entry.my_watched_episodes }}
+        <strong>Punteggio:</strong>
+        <select class="score-selector select-dark" data-entry-id="{{ entry._id }}">
+          {% for i in range(11) %}
+          <option value="{{ i }}" {% if entry.my_score == i %}selected{% endif %}>{{ i }}</option>
+          {% endfor %}
+        </select>
+        
+        |
+        <strong>Status:</strong>
+        <select class="status-selector select-dark" data-entry-id="{{ entry._id }}">
+          <option value="watching" {% if entry.stato == 'watching' %}selected{% endif %}>Watching</option>
+          <option value="completed" {% if entry.stato == 'completed' %}selected{% endif %}>Completed</option>
+        </select>
+
+        |
+        <strong>Episodi visti:</strong>
+        <select class="episodes-selector select-dark" data-entry-id="{{ entry._id }}" data-max-episodes="{{ entry.anime_info.episodes }}">
+          {% for i in range(entry.anime_info.episodes + 1) %}
+          <option value="{{ i }}" {% if entry.my_watched_episodes == i %}selected{% endif %}>{{ i }}</option>
+          {% endfor %}
+        </select>
       </p>
 
       <div class="btn-group mt-2" role="group">
-        <a
-          href="{{ url_for('anime.anime_detail', anime_id=entry.anime_info.anime_id) }}"
-          class="btn btn-sm btn-custom btn-dettagli"
-          >Dettagli</a
-        >
-        <a
-          href="{{ url_for('anime.edit_watchlist', entry_id=entry._id) }}"
-          class="btn btn-sm btn-custom btn-modifica"
-          >Modifica</a
-        >
-        <form
-          method="POST"
-          action="{{ url_for('anime.delete_watchlist', entry_id=entry._id) }}"
-          class="d-inline"
-        >
-          <button type="submit" class="btn btn-sm btn-custom btn-elimina">
-            Elimina
-          </button>
+        
+        <a href="{{ url_for('anime.anime_detail', anime_id=entry.anime_info.anime_id) }}" class="btn btn-sm btn-custom btn-dettagli">
+          Dettagli
+        </a>
+
+        <button type="button" class="btn btn-sm btn-custom btn-modifica salva-btn" data-entry-id="{{ entry._id }}">
+          Salva
+        </button>
+
+        <form method="POST" action="{{ url_for('anime.delete_watchlist', entry_id=entry._id) }}" class="d-inline">
+          <button type="submit" class="btn btn-sm btn-custom btn-elimina">Elimina</button>
         </form>
+
       </div>
     </div>
-  </div>
 
+  </div>
   {% endfor %}
 </div>
 

@@ -24,7 +24,7 @@ def register():
 
         hashed_pw = bcrypt.generate_password_hash(password, rounds=10).decode('utf-8')
         nuovo_utente = {
-            "_id": str(ObjectId()),
+            "_id": ObjectId(),
             "username": username,
             "gender": gender,
             "location": location,
