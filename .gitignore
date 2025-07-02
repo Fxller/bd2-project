@@ -1,6 +1,6 @@
 anime-env/
 anime_db/
-
+datasets/
 
 __pycache__/
 *.py[cod]
