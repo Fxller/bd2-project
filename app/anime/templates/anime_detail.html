@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<h2 class="mb-4 text-center">{{ anime.title }}</h2>
+<h2 class="mb-4 text-center"><b>{{ anime.title }}</b></h2>
 
 <div class="row">
   <div class="col-md-4 text-center mb-3">
@@ -61,6 +61,26 @@
         <strong>Produttori:</strong> {{ anime.producer }}
       </li>
     </ul>
+  </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div
+    id="watchlist-toast"
+    class="toast align-items-center text-bg-success border-0"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+  >
+    <div class="d-flex">
+      <div class="toast-body">Anime aggiunto alla Watchlist!</div>
+      <button
+        type="button"
+        class="btn-close btn-close-white me-2 m-auto"
+        data-bs-dismiss="toast"
+        aria-label="Chiudi"
+      ></button>
+    </div>
   </div>
 </div>
 
