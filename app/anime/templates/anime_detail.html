@@ -31,7 +31,7 @@
         <strong>Tipo:</strong> {{ anime.type }}
       </li>
       <li class="list-group-item bg-transparent text-light">
-        <strong>Genere:</strong> {{ anime.genre }}
+        <strong>Genere:</strong> {{ anime.genre | join(', ') }}
       </li>
       <li class="list-group-item bg-transparent text-light">
         <strong>Punteggio:</strong> {{ anime.score }}
@@ -55,7 +55,7 @@
         <strong>Data di uscita:</strong> {{ anime.aired_string }}
       </li>
       <li class="list-group-item bg-transparent text-light">
-        <strong>Favoriti:</strong> {{ anime.favorites }}
+        <strong>Preferiti:</strong> {{ anime.favorites }}
       </li>
       <li class="list-group-item bg-transparent text-light">
         <strong>Produttori:</strong> {{ anime.producer }}
