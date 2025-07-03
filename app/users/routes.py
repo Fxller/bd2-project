@@ -65,10 +65,21 @@ def logout():
 
 @users_bp.route('/user/<username>')
 def user_profile(username):
+    # Controllo se l'utente è loggato
+    if 'username' not in session:
+        flash("Devi essere loggato per vedere questa pagina.", "danger")
+        return redirect(url_for('users.login'))
+
+    # Controllo se sta cercando di vedere la propria pagina
+    if session['username'] != username:
+        flash("Non puoi vedere la watchlist di altri utenti.", "danger")
+        return redirect(url_for('users.account'))
+
+    # Se è l'utente giusto, proseguo
     user = mongo.db.users.find_one({"username": username})
     if not user:
         return "Utente non trovato", 404
-    
+
     user_id = user["_id"]
 
     watchlist = mongo.db.user_anime_list.aggregate([

@@ -256,8 +256,8 @@ img.rounded-circle {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-left: 20%;
-    margin-right: 20%;
+    max-width: 700px;  /* puoi scegliere la larghezza massima che preferisci */
+    margin: 0 auto;    /* per centrare il blocco */
 }
 
 .watchlist-img img {

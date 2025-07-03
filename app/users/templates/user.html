@@ -12,7 +12,11 @@
   <div class="watchlist-item d-flex align-items-center">
     
     <div class="watchlist-img">
+      {% if entry.anime_info.image_url %}
+      <img src="{{ entry.anime_info.image_url }}" alt="Cover" />
+      {% else %}
       <img src="{{ url_for('static', filename='default_anime.jpg') }}" alt="Cover" />
+      {% endif %}
     </div>
 
     <div class="watchlist-details flex-grow-1">
@@ -44,9 +48,9 @@
 
       <div class="btn-group mt-2" role="group">
         
-        <a href="{{ url_for('anime.anime_detail', anime_id=entry.anime_info.anime_id) }}" class="btn btn-sm btn-custom btn-dettagli">
-          Dettagli
-        </a>
+     <a href="{{ url_for('anime.anime_detail', anime_id=entry.anime_info._id) }}" class="btn btn-sm btn-custom btn-dettagli">
+      Dettagli
+    </a>
 
         <button type="button" class="btn btn-sm btn-custom btn-modifica salva-btn" data-entry-id="{{ entry._id }}">
           Salva

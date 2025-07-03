@@ -2,15 +2,60 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.extensions import mongo
 from bson.objectid import ObjectId
 from flask import jsonify, session
+import pandas as pd
+import pickle
+from sklearn.metrics.pairwise import cosine_distances
 
 anime_bp = Blueprint('anime', __name__, template_folder='templates')
+
+df = pd.read_csv('datasets/anime_suggestions.csv')
+
+with open('matrice_X.pkl', 'rb') as f:
+    X = pickle.load(f)
+
+def get_suggerimenti(titolo, n=6):
+    anime_corrente = df[df['title'].str.lower() == titolo.lower()]
+
+    if anime_corrente.empty:
+        return []
+
+    indice_anime = anime_corrente.index[0]
+    cluster_corrente = anime_corrente['cluster'].values[0]
+    cluster_anime = df[df['cluster'] == cluster_corrente]
+    cluster_indices = cluster_anime.index
+    X_cluster = X[cluster_indices]
+    anime_feature = X[indice_anime].reshape(1, -1)
+    distanze = cosine_distances(anime_feature, X_cluster)[0]
+    cluster_anime = cluster_anime.copy()
+    cluster_anime['distanza'] = distanze
+    suggerimenti = cluster_anime[cluster_anime['title'].str.lower() != titolo.lower()]
+    suggerimenti = suggerimenti.sort_values('distanza').head(n)
+    
+    return suggerimenti[['title', 'score', 'episodes']].to_dict(orient='records')
+
 
 @anime_bp.route('/<string:anime_id>')
 def anime_detail(anime_id):
     anime = mongo.db.anime.find_one({"_id": ObjectId(anime_id)})
     if not anime:
         return "Anime non trovato", 404
-    return render_template("anime_detail.html", anime=anime)
+
+    titolo = anime['title']
+    suggerimenti = get_suggerimenti(titolo)
+
+    suggerimenti_mongo = []
+    for s in suggerimenti:
+        suggerito = mongo.db.anime.find_one({"title": s['title']})
+        if suggerito:
+            suggerimenti_mongo.append({
+                "_id": suggerito["_id"],
+                "title": suggerito["title"],
+                "image_url": suggerito.get("image_url", ""),
+                "score": suggerito.get("score", ""),
+                "episodes": suggerito.get("episodes", "")
+            })
+
+    return render_template("anime_detail.html", anime=anime, suggerimenti=suggerimenti_mongo)
 
 
 @anime_bp.route('/watchlist/add', methods=['POST'])

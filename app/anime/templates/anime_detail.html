@@ -63,6 +63,31 @@
     </ul>
   </div>
 </div>
+<hr class="my-4" style="border-top: 2px solid gray;" />
+
+<h3 class="text-center text-light mb-4">Anime consigliati</h3>
+
+<div class="row">
+  {% for suggerimento in suggerimenti %}
+  <div class="col-md-2 col-sm-4 col-6 mb-4 text-center">
+    <a href="{{ url_for('anime.anime_detail', anime_id=suggerimento._id) }}" style="text-decoration: none;">
+      {% if suggerimento.image_url %}
+      <img
+        src="{{ suggerimento.image_url }}"
+        alt="{{ suggerimento.title }}"
+        class="img-fluid rounded shadow mb-2"
+        style="max-height: 180px;"
+      />
+      {% else %}
+      <div class="text-light bg-secondary p-4 rounded mb-2">
+        Nessuna immagine
+      </div>
+      {% endif %}
+      <div class="text-light">{{ suggerimento.title }}</div>
+    </a>
+  </div>
+  {% endfor %}
+</div>
 
 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
   <div
