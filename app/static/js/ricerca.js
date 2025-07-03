@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         listaAnime.innerHTML = html;
                     })
                     .catch(err => console.error('Errore durante la ricerca:', err));
-            }, 400); // Debounce di 400ms
+            }, 400);git 
         });
     }
 });
