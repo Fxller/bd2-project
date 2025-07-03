@@ -137,3 +137,28 @@ def edit_account():
         return redirect(url_for('users.account'))
 
     return render_template('edit_account.html', user=user)
+
+@users_bp.route('/delete_account', methods=['POST'])
+def delete_account():
+    if 'username' not in session:
+        flash("Devi essere loggato per eliminare l'account.", "danger")
+        return redirect(url_for('auth.login'))
+
+    username = session['username']
+    user = mongo.db.users.find_one({"username": username})
+    
+    if not user:
+        flash("Utente non trovato.", "danger")
+        return redirect(url_for('auth.login'))
+
+    # Elimina l'utente
+    mongo.db.users.delete_one({"_id": user['_id']})
+
+    # Elimina anche la watchlist o altri dati correlati
+    mongo.db.user_anime_list.delete_many({"user_id": user['_id']})
+
+    # Pulisci la sessione
+    session.clear()
+
+    flash("Il tuo account è stato eliminato con successo.", "success")
+    return redirect(url_for('users.login'))
