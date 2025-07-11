@@ -23,8 +23,8 @@
       <li class="list-group-item bg-transparent text-light">
         <strong>Email:</strong> {{ user.email }}
       </li>
-      <li class="list-group-item bg-transparent text-light d-flex align-items-center justify-content-between">
-        <div><strong>Password:</strong> ********</div>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Password:</strong> ********
       </li>
       <li class="list-group-item bg-transparent text-light">
         <strong>Genere:</strong> {{ user.gender }}
@@ -34,6 +34,9 @@
       </li>
       <li class="list-group-item bg-transparent text-light">
         <strong>Data di nascita:</strong> {{ user.birth_date[:10] }}
+      </li>
+      <li class="list-group-item bg-transparent text-light">
+        <strong>Data registrazione:</strong> {{ user.join_date[:10] }}
       </li>
     </ul>
 

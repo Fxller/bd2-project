@@ -7,14 +7,11 @@ main_bp = Blueprint('main', __name__, template_folder='templates')
 def home():
     query = {}
 
-    title = request.args.get('title')
     genre = request.args.get('genre')
     min_score = request.args.get('min_score')
     page = int(request.args.get('page', 1))
     per_page = 12
 
-    if title:
-        query["title"] = {"$regex": title, "$options": "i"}
     if genre:
         query["genre"] = {"$regex": genre, "$options": "i"}
     if min_score:
