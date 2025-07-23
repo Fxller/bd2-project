@@ -1,8 +1,23 @@
 console.log("Script incluso correttamente!");
+
 document.addEventListener('DOMContentLoaded', () => {
   console.log("JS caricato correttamente!");
   console.log(document.querySelectorAll('.salva-btn'));
 
+function mostraToast(messaggio, success = true) {
+  const toastEl = document.getElementById('watchlist-toast');
+  if (!toastEl) return;
+
+  const body = toastEl.querySelector('.toast-body');
+  if (body) body.textContent = messaggio;
+
+  // Cambia colore in base al tipo
+  toastEl.classList.remove('text-bg-success', 'text-bg-danger');
+  toastEl.classList.add(success ? 'text-bg-success' : 'text-bg-danger');
+
+  const toast = new bootstrap.Toast(toastEl);
+  toast.show();
+}
 
   document.querySelectorAll('.salva-btn').forEach(button => {
     button.addEventListener('click', () => {
@@ -29,14 +44,14 @@ document.addEventListener('DOMContentLoaded', () => {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          alert("Modifica salvata con successo!");
+          mostraToast("Modifica salvata con successo alla watchlist!", true);
         } else {
-          alert("Errore nel salvataggio.");
+          mostraToast("Errore nel salvataggio.", false);
         }
       })
       .catch(err => {
         console.error(err);
-        alert("Errore di rete nel salvataggio.");
+        mostraToast("Errore di rete nel salvataggio.");
       });
     });
   });
