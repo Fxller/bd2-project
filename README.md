@@ -115,13 +115,3 @@ E segue le proprietà **BASE**:
 7. Considerazioni su CAP e BASE
 8. Demo finale
 
----
-
-## 🚧 Stato di avanzamento
-
-* [x] Analisi preliminare e scelta dataset
-* [x] Modellazione iniziale delle collection
-* [ ] Definizione schema MongoDB e inserimento
-* [ ] Script CRUD e JOIN
-* [ ] Interfaccia web
-* [ ] Stesura completa documentazione
